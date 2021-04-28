@@ -1,0 +1,35 @@
+﻿@model IEnumerable<VehicleType>
+
+@{
+    ViewData["Title"] = " | Manage VehicleTypes";
+}
+
+<h1 class="mb-2">Manage VehicleTypes</h1>
+
+<h5 class="mt-2"><a asp-action="Add" asp-area="Admin">Add a VehicleType</a></h5>
+
+<table class="table table-bordered table-striped table-sm">
+    <thead>
+        <tr><th>VehicleTypeId</th><th>Name</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (VehicleType vehicleType in Model)
+        {
+            <tr>
+                <td>@vehicleType.VehicleTypeId</td>
+                <td>@vehicleType.Name</td>
+                <td>
+                    <a asp-action="ViewBooks" asp-area="Admin" asp-route-id="@vehicleType.VehicleTypeId"
+                        class="btn btn-primary">View Books</a>
+                    <a asp-action="Edit" asp-area="Admin" asp-route-id="@vehicleType.VehicleTypeId"
+                        class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-area="Admin" asp-route-id="@vehicleType.VehicleTypeId"
+                        class="btn btn-primary">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
