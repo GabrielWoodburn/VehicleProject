@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Azure.Identity;
 
 namespace VehicleProject
 {
@@ -21,7 +22,7 @@ namespace VehicleProject
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                    .UseDefaultServiceProvider(  
+                    .UseDefaultServiceProvider(
                         options => options.ValidateScopes = false);
 
                 });

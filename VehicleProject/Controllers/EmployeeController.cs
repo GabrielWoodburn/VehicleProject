@@ -27,7 +27,7 @@ namespace VehicleProject.Controllers
             else
                 options.OrderBy = a => a.LastName;
 
-            var vm = new AuthorListViewModel {
+            var vm = new EmployeeListViewModel {
                 Employees = data.List(options),
                 CurrentRoute = builder.CurrentRoute,
                 TotalPages = builder.GetTotalPages(data.Count)

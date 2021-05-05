@@ -43,7 +43,7 @@ namespace VehicleProject.Areas.Admin.Controllers
             if (user != null)
             {
                 IdentityResult result = await userManager.DeleteAsync(user);
-                if (!result.Succeeded) // if failed
+                if (!result.Succeeded)
                 {
                     string errorMessage = "";
                     foreach (IdentityError error in result.Errors)

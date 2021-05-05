@@ -6,7 +6,6 @@ namespace VehicleProject.Models
     {
         private const string VehicleTypeKey = "validVehicleType";
         private const string EmployeeKey = "validEmployee";
-        private const string EmailKey = "validEmail";
 
         private ITempDataDictionary tempData { get; set; }
         public Validate(ITempDataDictionary temp) => tempData = temp;
@@ -14,18 +13,18 @@ namespace VehicleProject.Models
         public bool IsValid { get; private set; }
         public string ErrorMessage { get; private set; }
 
-        public void CheckGenre(string vehicleTypeId, Repository<VehicleType> data)
+        public void CheckVehicleType(string vehicleTypeId, Repository<VehicleType> data)
         {
             VehicleType entity = data.Get(vehicleTypeId);
             IsValid = (entity == null) ? true : false;
             ErrorMessage = (IsValid) ? "" : 
                 $"VehicleType id {vehicleTypeId} is already in the database.";
         }
-        public void MarkGenreChecked() => tempData[VehicleTypeKey] = true;
-        public void ClearGenre() => tempData.Remove(VehicleTypeKey);
-        public bool IsGenreChecked => tempData.Keys.Contains(VehicleTypeKey);
+        public void MarkVehicleTypeChecked() => tempData[VehicleTypeKey] = true;
+        public void ClearVehicleType() => tempData.Remove(VehicleTypeKey);
+        public bool IsVehicleTypeChecked => tempData.Keys.Contains(VehicleTypeKey);
 
-        public void CheckAuthor(string firstName, string lastName, string operation, Repository<Employee> data)
+        public void CheckEmployee(string firstName, string lastName, string operation, Repository<Employee> data)
         {
             Employee entity = null; 
             if (Operation.IsAdd(operation)) {
@@ -36,8 +35,8 @@ namespace VehicleProject.Models
             ErrorMessage = (IsValid) ? "" : 
                 $"Employee {entity.FullName} is already in the database.";
         }
-        public void MarkAuthorChecked() => tempData[EmployeeKey] = true;
-        public void ClearAuthor() => tempData.Remove(EmployeeKey);
-        public bool IsAuthorChecked => tempData.Keys.Contains(EmployeeKey);
+        public void MarkEmployeeChecked() => tempData[EmployeeKey] = true;
+        public void ClearEmployee() => tempData.Remove(EmployeeKey);
+        public bool IsEmployeeChecked => tempData.Keys.Contains(EmployeeKey);
     }
 }

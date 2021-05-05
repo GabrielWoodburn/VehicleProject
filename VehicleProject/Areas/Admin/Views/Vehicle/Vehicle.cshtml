@@ -1,8 +1,7 @@
 ﻿@model  VehicleViewModel
 
 @{
-    // this view is used for add, edit, and delete. 
-    // Which one is determined by the action method name.
+    // this view is used for add, edit, and delete. The routeData action values determines which
     var action = ViewContext.RouteData.Values["action"].ToString().Capitalize();
 
     ViewData["Title"] = $" | {action} Vehicle";
@@ -14,30 +13,32 @@
 
     <input type="hidden" asp-for="Vehicle.VehicleId" />
 
-    <div class="form-group row">
-        <div class="col-sm-2"><label>Title:</label></div>
+	<div class="form-group row">
+		<div class="col-sm-2"><label>Title:</label></div>
 
-        @* if deleting, display title in a label and put value in hidden field
-           for delete message. Otherwise, provide a text box*@
-        @if (Operation.IsDelete(action)) {
-            <div class="col-sm-4"><label>@Model.Vehicle.Title</label></div>
-            <input type="hidden" asp-for="Vehicle.Title" />
-        }
-        else {
-            <div class="col-sm-4">
-                <input type="text" asp-for="Vehicle.Title" class="form-control" />
-            </div>
-            <div class="col-sm-6">
-                <span asp-validation-for="Vehicle.Title" class="text-danger"></span>
-            </div>
-        }
-    </div>
+		@* If deleting, display title in a label*@
+		@if (Operation.IsDelete(action))
+		{
+			<div class="col-sm-4"><label>@Model.Vehicle.Title</label></div>
+			<input type="hidden" asp-for="Vehicle.Title" />
+		}
+		else
+		{
+			@* Provide a text box *@
+			<div class="col-sm-4">
+				<input type="text" asp-for="Vehicle.Title" class="form-control" />
+			</div>
+			<div class="col-sm-6">
+				<span asp-validation-for="Vehicle.Title" class="text-danger"></span>
+			</div>
+		}
+	</div>
 
-    @* if not deleting, display text boxes and drop-downs for rest of fields*@
+    @* Display text boxes and drop-downs *@
     @if (!Operation.IsDelete(action))
     {
         <div class="form-group row">
-            <div class="col-sm-2"><label>Price:</label></div>
+            <div class="col-sm-2"><label>Price per hour:</label></div>
             <div class="col-sm-4">
                 <input type="text" asp-for="Vehicle.Price" class="form-control" />
             </div>
@@ -46,7 +47,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="col-sm-2"><label>Genre:</label></div>
+            <div class="col-sm-2"><label>Vehicle Type:</label></div>
             <div class="col-sm-4">
                 <select asp-for="Vehicle.VehicleTypeId" class="form-control"
                     asp-items='@new SelectList(Model.VehicleTypes, "VehicleTypeId", "Name", Model.Vehicle.VehicleTypeId)'>
@@ -58,13 +59,13 @@
         </div>
         <div class="form-group row">
             <div class="col-sm-2">
-                <label>Author(s):</label><br />
+                <label>Employee(s):</label><br />
             </div>
             <div class="col-sm-4">
                 <select asp-for="SelectedEmployees" class="form-control"
                     asp-items='@new MultiSelectList(Model.Employees, "EmployeeId", "FullName", Model.SelectedEmployees)'>
                 </select>
-                (Hold down CTRL or CMD key to select multiple)
+                (Hold down CTRL select multiple)
             </div>
             <div class="col-sm-6">
                 <span asp-validation-for="SelectedEmployees" class="text-danger"></span>
@@ -75,7 +76,7 @@
         <div class="col-sm-4 offset-sm-2">
             <button type="submit" class="btn btn-primary">@action</button>
 
-            @* return user to main admin page after add, or to search page otherwise *@
+            @* Return to the main admin page after adding, or to the search page *@
             <a asp-action="@(Operation.IsAdd(action) ? "Index" : "Search")"
                class="btn btn-primary">Cancel</a>
         </div>

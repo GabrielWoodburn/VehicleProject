@@ -41,8 +41,8 @@ namespace VehicleProject.Areas.Admin.Controllers
         public IActionResult Add(Employee employee, string operation)
         {
             var validate = new Validate(TempData);
-            if (!validate.IsAuthorChecked) {
-                validate.CheckAuthor(employee.FirstName, employee.LastName, operation, data);
+            if (!validate.IsEmployeeChecked) {
+                validate.CheckEmployee(employee.FirstName, employee.LastName, operation, data);
                 if (!validate.IsValid) {
                     ModelState.AddModelError(nameof(employee.LastName), validate.ErrorMessage);
                 }    
@@ -51,7 +51,7 @@ namespace VehicleProject.Areas.Admin.Controllers
             if (ModelState.IsValid) {
                 data.Insert(employee);
                 data.Save();
-                validate.ClearAuthor();
+                validate.ClearEmployee();
                 TempData["message"] = $"{employee.FullName} added to Employees.";
                 return RedirectToAction("Index");  
             }
@@ -86,7 +86,7 @@ namespace VehicleProject.Areas.Admin.Controllers
             });
 
             if (employee.VehicleEmployees.Count > 0) {
-                TempData["message"] = $"Can't delete author {employee.FullName} because they are associated with these vehicles.";
+                TempData["message"] = $"Can't delete employee {employee.FullName} because they are associated with these vehicles.";
                 return GoToEmployeeSearch(employee);
             }
             else {
@@ -95,11 +95,11 @@ namespace VehicleProject.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult Delete(Employee author)
+        public RedirectToActionResult Delete(Employee employee)
         {
-            data.Delete(author);
+            data.Delete(employee);
             data.Save();
-            TempData["message"] = $"{author.FullName} removed from Employees.";
+            TempData["message"] = $"{employee.FullName} removed from Employees.";
             return RedirectToAction("Index");  
         }
 

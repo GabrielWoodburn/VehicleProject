@@ -6,21 +6,21 @@ namespace VehicleProject.Areas.Admin.Controllers
     [Area("Admin")]
     public class ValidationController : Controller
     {
-        private Repository<Employee> authorData { get; set; }
-        private Repository<VehicleType> genreData { get; set; }
+        private Repository<Employee> employeeData { get; set; }
+        private Repository<VehicleType> vehicleTypeData { get; set; }
 
         public ValidationController(VehicleProjectContext ctx)
         { 
-            authorData = new Repository<Employee>(ctx);
-            genreData = new Repository<VehicleType>(ctx);
+            employeeData = new Repository<Employee>(ctx);
+            vehicleTypeData = new Repository<VehicleType>(ctx);
         }
 
-        public JsonResult CheckGenre(string genreId)
+        public JsonResult CheckVehicleType(string vehicleTypeId)
         {
             var validate = new Validate(TempData);
-            validate.CheckGenre(genreId, genreData);
+            validate.CheckVehicleType(vehicleTypeId, vehicleTypeData);
             if (validate.IsValid) {
-                validate.MarkGenreChecked();
+                validate.MarkVehicleTypeChecked();
                 return Json(true);
             }
             else {
@@ -28,12 +28,12 @@ namespace VehicleProject.Areas.Admin.Controllers
             }
         }
 
-        public JsonResult CheckAuthor(string firstName, string lastName, string operation)
+        public JsonResult CheckEmployee(string firstName, string lastName, string operation)
         {
             var validate = new Validate(TempData);
-            validate.CheckAuthor(firstName, lastName, operation, authorData);
+            validate.CheckEmployee(firstName, lastName, operation, employeeData);
             if (validate.IsValid) {
-                validate.MarkAuthorChecked();
+                validate.MarkEmployeeChecked();
                 return Json(true);
             }
             else {

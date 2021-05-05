@@ -47,11 +47,11 @@ namespace VehicleProject.Areas.Admin.Controllers
                 var options = new QueryOptions<Vehicle> {
                     Include = "VehicleType, VehicleEmployees.Employee"
                 };
-                if (search.IsBook) { 
+                if (search.IsVehicle) { 
                     options.Where = b => b.Title.Contains(vm.SearchTerm);
                     vm.Header = $"Search results for vehicle title '{vm.SearchTerm}'";
                 }
-                if (search.IsAuthor) {
+                if (search.IsEmployee) {
                     int index = vm.SearchTerm.LastIndexOf(' ');
                     if (index == -1) {
                         options.Where = b => b.VehicleEmployees.Any(
@@ -67,7 +67,7 @@ namespace VehicleProject.Areas.Admin.Controllers
                     }
                     vm.Header = $"Search results for employee '{vm.SearchTerm}'";
                 }
-                if (search.IsGenre) {                  
+                if (search.IsVehicleType) {                  
                     options.Where = b => b.VehicleTypeId.Contains(vm.SearchTerm);
                     vm.Header = $"Search results for vehicleType ID '{vm.SearchTerm}'";
                 }
@@ -80,7 +80,7 @@ namespace VehicleProject.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ViewResult Add(int id) => GetBook(id, "Add");
+        public ViewResult Add(int id) => GetVehicle(id, "Add");
 
         [HttpPost]
         public IActionResult Add(VehicleViewModel vm)
@@ -100,7 +100,7 @@ namespace VehicleProject.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ViewResult Edit(int id) => GetBook(id, "Edit");
+        public ViewResult Edit(int id) => GetVehicle(id, "Edit");
         
         [HttpPost]
         public IActionResult Edit(VehicleViewModel vm)
@@ -121,7 +121,7 @@ namespace VehicleProject.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ViewResult Delete(int id) => GetBook(id, "Delete");
+        public ViewResult Delete(int id) => GetVehicle(id, "Delete");
 
         [HttpPost]
         public IActionResult Delete(VehicleViewModel vm)
@@ -132,7 +132,7 @@ namespace VehicleProject.Areas.Admin.Controllers
             return RedirectToAction("Search");  
         }
 
-        private ViewResult GetBook(int id, string operation)
+        private ViewResult GetVehicle(int id, string operation)
         {
             var book = new VehicleViewModel();
             Load(book, operation, id);

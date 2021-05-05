@@ -23,9 +23,9 @@ namespace VehicleProject.Models
         }
 
         public bool HasSearchTerm => !string.IsNullOrEmpty(SearchTerm);
-        public bool IsBook => Type.EqualsNoCase("vehicle");
-        public bool IsAuthor => Type.EqualsNoCase("employee");
-        public bool IsGenre => Type.EqualsNoCase("genre");
+        public bool IsVehicle => Type.EqualsNoCase("vehicle");
+        public bool IsEmployee => Type.EqualsNoCase("employee");
+        public bool IsVehicleType => Type.EqualsNoCase("vehicleType");
 
         public void Clear()
         {

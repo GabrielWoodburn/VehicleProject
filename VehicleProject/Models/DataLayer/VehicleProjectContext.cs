@@ -22,10 +22,10 @@ namespace VehicleProject.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // BookAuthor: set primary key 
+            // VehicleEmployee : set primary key 
             modelBuilder.Entity<VehicleEmployee>().HasKey(ba => new { ba.VehicleId, ba.EmployeeId });
 
-            // BookAuthor: set foreign keys 
+            // VehicleEmployee : set foreign keys 
             modelBuilder.Entity<VehicleEmployee>().HasOne(ba => ba.Vehicle)
                 .WithMany(b => b.VehicleEmployees)
                 .HasForeignKey(ba => ba.VehicleId);
@@ -33,7 +33,7 @@ namespace VehicleProject.Models
                 .WithMany(a => a.VehicleEmployees)
                 .HasForeignKey(ba => ba.EmployeeId);
 
-            // Book: remove cascading delete with Genre
+            // Vehicle: remove cascading delete with VehicleType
             modelBuilder.Entity<Vehicle>().HasOne(b => b.VehicleType)
                 .WithMany(g => g.Vehicles)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -56,13 +56,13 @@ namespace VehicleProject.Models
             string password = "Sesame";
             string roleName = "Admin";
 
-            // if role doesn't exist, create it
+            // If role doesn't exist, make a new one
             if (await roleManager.FindByNameAsync(roleName) == null)
             {
                 await roleManager.CreateAsync(new IdentityRole(roleName));
             }
 
-            // if username doesn't exist, create it and add to role
+            // If username doesn't exist, make it and add to role
             if (await userManager.FindByNameAsync(username) == null)
             {
                 User user = new User { UserName = username };

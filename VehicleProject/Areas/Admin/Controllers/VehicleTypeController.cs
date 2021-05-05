@@ -29,8 +29,8 @@ namespace VehicleProject.Areas.Admin.Controllers
         public IActionResult Add(VehicleType vehicleType)
         {
             var validate = new Validate(TempData);
-            if (!validate.IsGenreChecked) {
-                validate.CheckGenre(vehicleType.VehicleTypeId, data);
+            if (!validate.IsVehicleTypeChecked) {
+                validate.CheckVehicleType(vehicleType.VehicleTypeId, data);
                 if (!validate.IsValid) {
                     ModelState.AddModelError(nameof(vehicleType.VehicleTypeId), validate.ErrorMessage);
                 }     
@@ -39,7 +39,7 @@ namespace VehicleProject.Areas.Admin.Controllers
             if (ModelState.IsValid) {
                 data.Insert(vehicleType);
                 data.Save();
-                validate.ClearGenre();
+                validate.ClearVehicleType();
                 TempData["message"] = $"{vehicleType.Name} added to VehicleTypes.";
                 return RedirectToAction("Index");  
             }
@@ -88,7 +88,7 @@ namespace VehicleProject.Areas.Admin.Controllers
             data.Delete(vehicleType);
             data.Save();
             TempData["message"] = $"{vehicleType.Name} removed from VehicleTypes.";
-            return RedirectToAction("Index");  // PRG pattern
+            return RedirectToAction("Index"); 
         }
 
         public RedirectToActionResult ViewBooks(string id) => GoToVehicleSearchResults(id);

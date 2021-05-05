@@ -1,114 +1,114 @@
-﻿@model BookListViewModel
+﻿@model VehicleListViewModel
 
 @{
-    ViewData["Title"] = " | Vehicle Catalog";
+	ViewData["Title"] = " | Vehicle Catalog";
 
-    // RouteDictionary
-    RouteDictionary current = Model.CurrentRoute;
-    RouteDictionary routes = Model.CurrentRoute.Clone();
+	// RouteDictionary
+	RouteDictionary current = Model.CurrentRoute;
+	RouteDictionary routes = Model.CurrentRoute.Clone();
 }
 
 <h1>Vehicle Catalog</h1>
 
 <form asp-action="Filter" method="post" class="form-inline">
-    <label>Employee: </label>
-    <select name="filter" class="form-control m-2"
-            asp-items="@(new SelectList(
+	<label>Employee: </label>
+	<select name="filter" class="form-control m-2"
+			asp-items="@(new SelectList(
             Model.Employees, "EmployeeId", "FullName", current.EmployeeFilter))">
-        <option value="@VehiclesGridDTO.DefaultFilter">All</option>
-    </select>
+		<option value="@VehiclesGridDTO.DefaultFilter">All</option>
+	</select>
 
-    <label>Genre: </label>
-    <select name="filter" class="form-control m-2"
-            asp-items="@(new SelectList(
+	<label>Vehicle Type: </label>
+	<select name="filter" class="form-control m-2"
+			asp-items="@(new SelectList(
             Model.VehicleTypes, "VehicleTypeId", "Name", current.VehicleTypeFilter))">
-        <option value="@VehiclesGridDTO.DefaultFilter">All</option>
-    </select>
+		<option value="@VehiclesGridDTO.DefaultFilter">All</option>
+	</select>
 
-    <label>Price: </label>
-    <select name="filter" class="form-control m-2"
-            asp-items="@(new SelectList(
+	<label>Price per hour: </label>
+	<select name="filter" class="form-control m-2"
+			asp-items="@(new SelectList(
             Model.Prices, "Key", "Value", current.PriceFilter))">
-        <option value="@VehiclesGridDTO.DefaultFilter">All</option>
-    </select>
+		<option value="@VehiclesGridDTO.DefaultFilter">All</option>
+	</select>
 
-    <button type="submit" class="btn btn-primary mr-2">Filter</button>
-    <button type="submit" class="btn btn-primary"
-            name="clear" value="true">
-        Clear
-    </button>
+	<button type="submit" class="btn btn-primary mr-2">Filter</button>
+	<button type="submit" class="btn btn-primary"
+			name="clear" value="true">
+		Clear
+	</button>
 </form>
 
 <form asp-action="Add" asp-controller="Cart" method="post">
-    <table class="table table-bordered table-striped table-sm">
-        
-        <thead class="thead-dark">
-            <tr>
-                <th>
-                    @{ routes.SetSortAndDirection(nameof(Vehicle.Title), current); }
-                    <a asp-action="List" asp-all-route-data="@routes"
-                       class="text-white">Title</a>
-                </th>
-                <th>
-                    Author(s)
-                </th>
-                <th>
-                    @{ routes.SetSortAndDirection(nameof(VehicleType), current); }
-                    <a asp-action="List" asp-all-route-data="@routes"
-                       class="text-white">VehicleType</a>
-                </th>
-                <th>
-                    @{ routes.SetSortAndDirection(nameof(Vehicle.Price), current); }
-                    <a asp-action="List" asp-all-route-data="@routes"
-                       class="text-white">Price</a>
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Vehicle vehicle in Model.Vehicles)
-            {
-                <tr>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@vehicle.VehicleId"
-                           asp-route-slug="@vehicle.Title.Slug()">
-                            @vehicle.Title
-                        </a>
-                    </td>
-                    <td>
-                        @foreach (var ba in vehicle.VehicleEmployees)
-                        {
-                            <p>
-                                <a asp-action="Details" asp-controller="Employee"
-                                   asp-route-id="@ba.EmployeeId"
-                                   asp-route-slug="@ba.Employee.FullName.Slug()">
-                                    @ba.Employee.FullName
-                                </a>
-                            </p>
-                        }
-                    </td>
-                    <td>@vehicle.VehicleType?.Name</td>
-                    <td>@vehicle.Price.ToString("c")</td>
-                    <td>
-                        <button type="submit" name="id" value="@vehicle.VehicleId"
-                                class="btn btn-primary">
-                            Add To List
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+	<table class="table table-bordered table-striped table-sm">
+
+		<thead class="thead-dark">
+			<tr>
+				<th>
+					@{ routes.SetSortAndDirection(nameof(Vehicle.Title), current); }
+					<a asp-action="List" asp-all-route-data="@routes"
+					   class="text-white">Title</a>
+				</th>
+				<th>
+					Employee(s)
+				</th>
+				<th>
+					@{ routes.SetSortAndDirection(nameof(VehicleType), current); }
+					<a asp-action="List" asp-all-route-data="@routes"
+					   class="text-white">VehicleType</a>
+				</th>
+				<th>
+					@{ routes.SetSortAndDirection(nameof(Vehicle.Price), current); }
+					<a asp-action="List" asp-all-route-data="@routes"
+					   class="text-white">Price</a>
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Vehicle vehicle in Model.Vehicles)
+			{
+				<tr>
+					<td>
+						<a asp-action="Details" asp-route-id="@vehicle.VehicleId"
+						   asp-route-slug="@vehicle.Title.Slug()">
+							@vehicle.Title
+						</a>
+					</td>
+					<td>
+						@foreach (var ba in vehicle.VehicleEmployees)
+						{
+							<p>
+								<a asp-action="Details" asp-controller="Employee"
+								   asp-route-id="@ba.EmployeeId"
+								   asp-route-slug="@ba.Employee.FullName.Slug()">
+									@ba.Employee.FullName
+								</a>
+							</p>
+						}
+					</td>
+					<td>@vehicle.VehicleType?.Name</td>
+					<td>@vehicle.Price.ToString("c")</td>
+					<td>
+						<button type="submit" name="id" value="@vehicle.VehicleId"
+								class="btn btn-primary">
+							Add To List
+						</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
 </form>
 
 @{
-    routes = Model.CurrentRoute.Clone();
+	routes = Model.CurrentRoute.Clone();
 
-    
-    for (int i = 1; i <= Model.TotalPages; i++)
-    {
-        routes.PageNumber = i;
-        <a asp-action="List" asp-all-route-data="@routes"
-           class="btn btn-outline-primary @Nav.Active(i, current.PageNumber)">@i</a>
-    }
+
+	for (int i = 1; i <= Model.TotalPages; i++)
+	{
+		routes.PageNumber = i;
+		<a asp-action="List" asp-all-route-data="@routes"
+		   class="btn btn-outline-primary @Nav.Active(i, current.PageNumber)">@i</a>
+	}
 }

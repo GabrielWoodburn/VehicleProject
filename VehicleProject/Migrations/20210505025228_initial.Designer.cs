@@ -10,14 +10,14 @@ using VehicleProject.Models;
 namespace VehicleProject.Migrations
 {
     [DbContext(typeof(VehicleProjectContext))]
-    [Migration("20210428100817_initial")]
+    [Migration("20210505025228_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 

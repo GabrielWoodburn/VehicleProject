@@ -6,7 +6,7 @@ namespace VehicleProject.Models
 {
     public static class FilterPrefix
     {
-        public const string VehicleType = "vehicleType-";
+        public const string VehicleType = "vehicletype-";
         public const string Price = "price-";
         public const string Employee = "employee-";
     }

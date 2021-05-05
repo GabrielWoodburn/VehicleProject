@@ -10,12 +10,12 @@ namespace VehicleProject.Models
                 Where = b => b.VehicleTypeId == builder.CurrentRoute.VehicleTypeFilter;
             }
             if (builder.IsFilterByPrice) {
-                if (builder.CurrentRoute.PriceFilter == "under7")
-                    Where = b => b.Price < 7;
-                else if (builder.CurrentRoute.PriceFilter == "7to14")
-                    Where = b => b.Price >= 7 && b.Price <= 14;
+                if (builder.CurrentRoute.PriceFilter == "under10")
+                    Where = b => b.Price < 10;
+                else if (builder.CurrentRoute.PriceFilter == "10to15")
+                    Where = b => b.Price >= 10 && b.Price <= 15;
                 else
-                    Where = b => b.Price > 14;
+                    Where = b => b.Price > 15;
             }
             if (builder.IsFilterByEmployee) {
                 int id = builder.CurrentRoute.EmployeeFilter.ToInt();
